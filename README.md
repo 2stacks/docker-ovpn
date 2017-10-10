@@ -12,9 +12,12 @@ for key material in '$PWD/config/ovpn'
   - ta.key
 
 ## Build the docker container
+```bash
   docker build --pull -t 2stacks/docker-ovpn .
+```
 
 ## Run OpenVPN Container
+```bash
 docker run -itd \
   -h openvpn \
   --restart=always \
@@ -29,33 +32,34 @@ docker run -itd \
   -p 443:443 \
   -v /opt/project-k/configs/ovpn:/etc/openvpn \
   registry.gitlab.com/2stacks/docker-ovpn
+```
 
 ## Run using comopse (can be used to launch freeradius and mysql)
 
-  version: '3.2'
-  
-  services:
-  
-    ovpn:
-      image: "registry.gitlab.com/2stacks/docker-ovpn:latest"
-      ports:
-        - "443:443"
-        - "1194:1194/udp"
-      volumes:
-        - "./configs/ovpn:/etc/openvpn"
-      environment:
-        #- RADIUS_HOST=freeradius
-        #- RADIUS_KEY=testing123
-        #- DNS_HOST1=8.8.8.8
-        #- DNS_HOST2=8.8.4.4
-      cap_add:
-        - NET_ADMIN
-      restart: always
-      networks:
-        - vpn
-  
-  networks:
-    vpn:
-      ipam:
-        config:
-          - subnet: 10.0.1.0/24
+    version: '3.2'
+    
+    services:
+    
+      ovpn:
+        image: "registry.gitlab.com/2stacks/docker-ovpn:latest"
+        ports:
+          - "443:443"
+          - "1194:1194/udp"
+        volumes:
+          - "./configs/ovpn:/etc/openvpn"
+        environment:
+          #- RADIUS_HOST=freeradius
+          #- RADIUS_KEY=testing123
+          #- DNS_HOST1=8.8.8.8
+          #- DNS_HOST2=8.8.4.4
+        cap_add:
+          - NET_ADMIN
+        restart: always
+        networks:
+          - vpn
+    
+    networks:
+      vpn:
+        ipam:
+          config:
+            - subnet: 10.0.1.0/24
