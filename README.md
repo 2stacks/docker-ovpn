@@ -1,0 +1,62 @@
+# OpenVPN Server in Docker Container
+
+Builds an OpenVPN server that uses Freeradius/MySQL for backend authentication.
+Server listens for connections on both UDP 1194 and TCP 443.  The server will look
+for key material in '$PWD/config/ovpn'
+
+## The following key materials are required to launch the server.
+  - ca.crt  
+  - site.crt  
+  - site.dh  
+  - site.key  
+  - ta.key
+
+## Build the docker container
+  docker build --pull -t 2stacks/docker-ovpn .
+  docker push 2stacks/docker-ovpn
+
+## Run OpenVPN Container
+docker run -itd \
+  -h openvpn \
+  --restart=always \
+  --name openvpn \
+  --network=vpn \
+  --cap-add=NET_ADMIN \
+  -e "RADIUS_HOST=<IP>" \
+  -e "RADIUS_KEY=<key>" \
+  -e "DNS_HOST1=8.8.8.8" \
+  -e "DNS_HOST2=8.8.4.4" \
+  -p 1194:1194/udp \
+  -p 443:443 \
+  -v /opt/project-k/configs/ovpn:/etc/openvpn \
+  registry.gitlab.com/2stacks/docker-ovpn
+
+## Run using comopse (can be used to launch freeradius and mysql)
+
+  version: '3.2'
+  
+  services:
+  
+    ovpn:
+      image: "registry.gitlab.com/2stacks/docker-ovpn:latest"
+      ports:
+        - "443:443"
+        - "1194:1194/udp"
+      volumes:
+        - "./configs/ovpn:/etc/openvpn"
+      environment:
+        #- RADIUS_HOST=freeradius
+        #- RADIUS_KEY=testing123
+        #- DNS_HOST1=8.8.8.8
+        #- DNS_HOST2=8.8.4.4
+      cap_add:
+        - NET_ADMIN
+      restart: always
+      networks:
+        - vpn
+  
+  networks:
+    vpn:
+      ipam:
+        config:
+          - subnet: 10.0.1.0/24
