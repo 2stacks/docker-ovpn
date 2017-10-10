@@ -30,8 +30,8 @@ docker run -itd \
   -e "DNS_HOST2=8.8.4.4" \
   -p 1194:1194/udp \
   -p 443:443 \
-  -v /opt/project-k/configs/ovpn:/etc/openvpn \
-  registry.gitlab.com/2stacks/docker-ovpn
+  -v /$PWD/configs/ovpn:/etc/openvpn \
+  2stacks/docker-ovpn
 ```
 
 ## Run using Docker Compose (can be used to launch freeradius and mysql)
@@ -44,7 +44,7 @@ docker-compose -f docker-compose.yml up -d
     services:
     
       ovpn:
-        image: "registry.gitlab.com/2stacks/docker-ovpn:latest"
+        image: "2stacks/docker-ovpn:latest"
         ports:
           - "443:443"
           - "1194:1194/udp"
