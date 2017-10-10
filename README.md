@@ -13,7 +13,6 @@ for key material in '$PWD/config/ovpn'
 
 ## Build the docker container
   docker build --pull -t 2stacks/docker-ovpn .
-  docker push 2stacks/docker-ovpn
 
 ## Run OpenVPN Container
 docker run -itd \
