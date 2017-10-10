@@ -34,7 +34,10 @@ docker run -itd \
   registry.gitlab.com/2stacks/docker-ovpn
 ```
 
-## Run using comopse (can be used to launch freeradius and mysql)
+## Run using Docker Compose (can be used to launch freeradius and mysql)
+```bash
+docker-compose -f docker-compose.yml up -d
+```
 
     version: '3.2'
     
