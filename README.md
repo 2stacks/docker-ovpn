@@ -11,6 +11,8 @@ for key material in '$PWD/config/ovpn'
   - site.key  
   - ta.key
 
+## Setting OVPN_DEBUG ENV to anything will enable server logging to /tmp
+
 ## Build the docker container
 ```bash
   docker build --pull -t 2stacks/docker-ovpn .
@@ -24,8 +26,8 @@ docker run -itd \
   --name openvpn \
   --network=vpn \
   --cap-add=NET_ADMIN \
-  -e "RADIUS_HOST=<IP>" \
-  -e "RADIUS_KEY=<key>" \
+  -e "RADIUS_HOST=freeradius" \
+  -e "RADIUS_KEY=testing123" \
   -e "DNS_HOST1=8.8.8.8" \
   -e "DNS_HOST2=8.8.4.4" \
   -p 1194:1194/udp \
@@ -55,6 +57,7 @@ docker-compose -f docker-compose.yml up -d
           #- RADIUS_KEY=testing123
           #- DNS_HOST1=8.8.8.8
           #- DNS_HOST2=8.8.4.4
+          - OVPN_DEBUG=yes
         cap_add:
           - NET_ADMIN
         restart: always
@@ -66,5 +69,3 @@ docker-compose -f docker-compose.yml up -d
         ipam:
           config:
             - subnet: 10.0.1.0/24
-
-

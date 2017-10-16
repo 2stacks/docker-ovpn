@@ -8,7 +8,7 @@ set -e
 
 cd /etc/openvpn
 
-if [ -n "${OVPNDEBUG}" ]
+if [ -n "${OVPN_DEBUG}" ]
   then
     TCPSTATUS="/tmp/openvpn-status-443.log"
     UDPSTATUS="/tmp/openvpn-status-1194.log"
@@ -141,7 +141,7 @@ EOF
 
 iptables -t nat -A POSTROUTING -s 10.43.94.0/23 -o eth0 -j MASQUERADE
 
-if [ -n "${OVPNDEBUG}" ]
+if [ -n "${OVPN_DEBUG}" ]
   then
     touch $TCPLOG $UDPLOG
     while true ; do openvpn tcp443.conf ; done >> $TCPLOG &
