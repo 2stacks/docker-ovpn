@@ -8,6 +8,21 @@ set -e
 
 cd /etc/openvpn
 
+if [ -n "${OVPNDEBUG}" ]
+  then
+    TCPSTATUS="/tmp/openvpn-status-443.log"
+    UDPSTATUS="/tmp/openvpn-status-1194.log"
+    TCPLOG="/tmp/tcp443.log"
+    UDPLOG="/tmp/udp1194.log"
+    VERBOSE="3"
+  else
+    TCPSTATUS="/dev/null"
+    UDPSTATUS="/dev/null"
+    TCPLOG="/dev/null"
+    UDPLOG="/dev/null"
+    VERBOSE="0"
+fi
+
 cat >tcp443.conf <<EOF
 port 443
 proto tcp-server
@@ -33,14 +48,14 @@ user nobody
 group nogroup
 persist-key
 persist-tun
-status openvpn-status-443.log
+status $TCPSTATUS
 plugin /usr/lib/openvpn/radiusplugin.so /etc/openvpn/radius443.conf
 username-as-common-name
 client-cert-not-required
 verify-client-cert none
-log /dev/null
+log $TCPLOG
 suppress-timestamps
-verb 0
+verb $VERBOSE
 mute 10
 EOF
 
@@ -91,14 +106,14 @@ user nobody
 group nogroup
 persist-key
 persist-tun
-status openvpn-status-1194.log
+status $UDPSTATUS
 plugin /usr/lib/openvpn/radiusplugin.so /etc/openvpn/radius1194.conf
 username-as-common-name
 client-cert-not-required
 verify-client-cert none
-log /dev/null
+log $UDPLOG
 suppress-timestamps
-verb 0
+verb $VERBOSE
 mute 10
 explicit-exit-notify 1
 EOF
@@ -126,9 +141,13 @@ EOF
 
 iptables -t nat -A POSTROUTING -s 10.43.94.0/23 -o eth0 -j MASQUERADE
 
-#touch tcp443.log udp1194.log
-#while true ; do openvpn tcp443.conf ; done >> tcp443.log &
-#while true ; do openvpn udp1194.conf ; done >> udp1194.log &
-#tail -f *.log
-while true ; do openvpn tcp443.conf ; done &
-while true ; do openvpn udp1194.conf ; done
+if [ -n "${OVPNDEBUG}" ]
+  then
+    touch $TCPLOG $UDPLOG
+    while true ; do openvpn tcp443.conf ; done >> $TCPLOG &
+    while true ; do openvpn udp1194.conf ; done >> $UDPLOG &
+    tail -f $TCPLOG $UDPLOG
+  else
+    while true ; do openvpn tcp443.conf ; done &
+    while true ; do openvpn udp1194.conf ; done
+fi
