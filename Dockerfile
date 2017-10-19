@@ -29,6 +29,7 @@ RUN apt-get -y update && apt-get install -y \
                                               openvpn \
 	                                      openvpn-auth-radius \
                                               freeradius-utils \
+                                              iputils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 # Add Scripts to Configure and Run OpenVPN
