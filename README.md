@@ -5,11 +5,12 @@ Server listens for connections on both UDP 1194 and TCP 443.  The server will lo
 for key material in '$PWD/config/ovpn'
 
 ## The following key materials are required to launch the server.
-  - ca.crt  
-  - site.crt  
-  - site.dh  
-  - site.key  
-  - ta.key
+
+-   ca.crt  
+-   site.crt  
+-   site.dh  
+-   site.key  
+-   ta.key
 
 ## Setting OVPN_DEBUG ENV to anything will enable server logging to /tmp
 
@@ -40,11 +41,11 @@ docker run -itd \
 ```bash
 docker-compose -f docker-compose.yml up -d
 ```
-
+```bash
     version: '3.2'
-    
+
     services:
-    
+
       ovpn:
         image: "2stacks/docker-ovpn:latest"
         ports:
@@ -63,9 +64,10 @@ docker-compose -f docker-compose.yml up -d
         restart: always
         networks:
           - vpn
-    
+
     networks:
       vpn:
         ipam:
           config:
             - subnet: 10.0.1.0/24
+```
