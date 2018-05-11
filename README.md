@@ -16,7 +16,15 @@ for key material in '$PWD/config/ovpn'
 -   site.key  
 -   ta.key
 
-## Setting OVPN_DEBUG ENV to anything will enable server logging to /tmp
+## Environment Variables
+
+-   RADIUS_HOST=freeradius
+-   RADIUS_KEY=testing123
+-   DNS_HOST1=1.1.1.1
+-   DNS_HOST2=1.0.0.1
+-   OVPN_DEBUG=yes
+
+Note: Setting OVPN_DEBUG ENV to anything will enable server logging to /tmp
 
 ## Build the docker container
 ```bash
