@@ -1,8 +1,12 @@
-# OpenVPN Server in Docker Container
+## OpenVPN Server in Docker Container
 
 Builds an OpenVPN server that uses Freeradius/MySQL for backend authentication.
 Server listens for connections on both UDP 1194 and TCP 443.  The server will look
 for key material in '$PWD/config/ovpn'
+
+## Supported tags
+-   1.1, latest
+-   0.1b
 
 ## The following key materials are required to launch the server.
 
@@ -29,8 +33,8 @@ docker run -itd \
   --cap-add=NET_ADMIN \
   -e "RADIUS_HOST=freeradius" \
   -e "RADIUS_KEY=testing123" \
-  -e "DNS_HOST1=8.8.8.8" \
-  -e "DNS_HOST2=8.8.4.4" \
+  -e "DNS_HOST1=1.1.1.1" \
+  -e "DNS_HOST2=1.0.0.1" \
   -p 1194:1194/udp \
   -p 443:443 \
   -v /$PWD/configs/ovpn:/etc/openvpn \
@@ -56,8 +60,8 @@ docker-compose -f docker-compose.yml up -d
         environment:
           #- RADIUS_HOST=freeradius
           #- RADIUS_KEY=testing123
-          #- DNS_HOST1=8.8.8.8
-          #- DNS_HOST2=8.8.4.4
+          #- DNS_HOST1=1.1.1.1
+          #- DNS_HOST2=1.0.0.1
           - OVPN_DEBUG=yes
         cap_add:
           - NET_ADMIN

@@ -4,7 +4,7 @@
 FROM ubuntu:16.04
 MAINTAINER "2stacks@2stacks.net"
 
-# Use --build-arg BUILD_DATE='date'
+# Use docker build --pull --build-arg BUILD_DATE='date' -t 2stacks/docker-ovpn .
 ARG BUILD_DATE
 
 # Image details
@@ -14,7 +14,7 @@ LABEL net.2stacks.build-date="$BUILD_DATE" \
       net.2stacks.description="Dockerfile for autobuilds" \
       net.2stacks.url="http://www.2stacks.net" \
       net.2stacks.vcs-type="Git" \
-      net.2stacks.version="0.1-Alpha"
+      net.2stacks.version="1.1"
 
 # Install OpenVPN
 RUN apt-get -y update && apt-get install -y \
@@ -45,8 +45,8 @@ EXPOSE 443/tcp 1194/udp
 # Allow run time config of options
 ENV RADIUS_KEY=testing123
 ENV RADIUS_HOST=freeradius
-ENV DNS_HOST1=8.8.8.8
-ENV DNS_HOST2=8.8.4.4
+ENV DNS_HOST1=1.1.1.1
+ENV DNS_HOST2=1.0.0.1
 
 # Execute 'run' Script
 CMD run
