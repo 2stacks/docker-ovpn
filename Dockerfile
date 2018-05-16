@@ -26,6 +26,7 @@ RUN apt-get -y update && apt-get install -y \
     curl -fsSL https://swupdate.openvpn.net/repos/repo-public.gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] http://build.openvpn.net/debian/openvpn/release/2.4 xenial main" && \
     apt-get -y update && apt-get install -y \
+                                              easy-rsa \
                                               openvpn \
 	                                      openvpn-auth-radius \
                                               freeradius-utils \

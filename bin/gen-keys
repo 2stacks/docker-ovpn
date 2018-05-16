@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# Initialize the EasyRSA PKI
+#
+
+set -e
+
+make-cadir /tmp/CA && cd /tmp/CA
+source vars
+./clean-all
+./build-ca --batch nopass
+./build-key-server --batch site
+./build-dh
+openvpn --genkey --secret keys/ta.key
+
+# Generate a client config based on keys created
+cat >client.conf <<EOF
+# Which device
+client
+setenv CLIENT_CERT 0
+proto udp
+nobind
+
+<connection>
+remote localhost 1194 udp
+</connection>
+
+<connection>
+remote localhost 443 tcp-client
+</connection>
+
+dev tun
+dev-type tun
+fast-io
+keepalive 10 60
+reneg-sec 604800
+sndbuf 100000
+rcvbuf 100000
+
+# uncomment if your server requires a username and password
+auth-user-pass
+auth-nocache
+
+# accept configs from server
+pull
+persist-key
+persist-tun
+
+# Use compression
+comp-lzo
+
+# HMAC Hash
+auth SHA256
+
+# Encryption
+cipher AES-128-CBC
+
+verb 3
+
+# this file is given by the server
+<ca>
+`cat keys/ca.crt`
+</ca>
+
+key-direction 1
+<tls-auth>
+`cat keys/ta.key`
+</tls-auth>
+EOF
+
+cp client.conf /etc/openvpn/
+
+cd keys
+cp ca.crt /etc/openvpn/
+cp site.crt /etc/openvpn/
+cp site.key /etc/openvpn/
+cp ta.key /etc/openvpn/
+cp dh2048.pem /etc/openvpn/site.dh
