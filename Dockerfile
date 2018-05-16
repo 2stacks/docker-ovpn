@@ -14,7 +14,7 @@ LABEL net.2stacks.build-date="$BUILD_DATE" \
       net.2stacks.description="Dockerfile for autobuilds" \
       net.2stacks.url="http://www.2stacks.net" \
       net.2stacks.vcs-type="Git" \
-      net.2stacks.version="1.1"
+      net.2stacks.version="1.2"
 
 # Install OpenVPN
 RUN apt-get -y update && apt-get install -y \
