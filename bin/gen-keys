@@ -22,11 +22,11 @@ proto udp
 nobind
 
 <connection>
-remote $HOSTNAME 1194 udp
+remote localhost 1194 udp
 </connection>
 
 <connection>
-remote $HOSTNAME 443 tcp-client
+remote localhost 443 tcp-client
 </connection>
 
 dev tun
