@@ -16,6 +16,17 @@ for key material in '$PWD/config/ovpn'
 -   site.key  
 -   ta.key
 
+A very basic shell script has been included to generate a set of key material using
+EasyRSA.  This key material uses the EasyRSA package default configuration and is not
+suitable for use in production.  To generate the keys as well as an example of how
+to use the keys in a client configuration run the following;
+
+```
+docker run -it --rm -v /$PWD/configs/ovpn:/etc/openvpn 2stacks/docker-ovpn gen-keys
+```
+
+All files will be copied to the the local volume mapped to /etc/openvpn.
+
 ## Environment Variables
 
 -   RADIUS_HOST=freeradius
