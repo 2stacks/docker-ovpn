@@ -5,7 +5,8 @@ Server listens for connections on both UDP 1194 and TCP 443.  The server will lo
 for key material in '$PWD/config/ovpn'
 
 ## Supported tags
--   1.1, latest
+-   1.2, latest
+-   1.1
 -   0.1b
 
 ## The following key materials are required to launch the server.
@@ -37,12 +38,12 @@ All files will be copied to the the local volume mapped to /etc/openvpn.
 
 Note: Setting OVPN_DEBUG ENV to anything will enable server logging to /tmp
 
-## Build the docker container
+## Build the OpenVPN Container
 ```bash
-  docker build --pull -t 2stacks/docker-ovpn .
+docker build --pull -t 2stacks/docker-ovpn .
 ```
 
-## Run OpenVPN Container
+## Run the OpenVPN Container
 ```bash
 docker run -itd \
   -h openvpn \
@@ -64,33 +65,76 @@ docker run -itd \
 ```bash
 docker-compose -f docker-compose.yml up -d
 ```
+
+Example 'docker-compose.yml' File
+
 ```bash
-    version: '3.2'
+version: '3.2'
 
-    services:
+services:
 
-      ovpn:
-        image: "2stacks/docker-ovpn:latest"
-        ports:
-          - "443:443"
-          - "1194:1194/udp"
-        volumes:
-          - "./configs/ovpn:/etc/openvpn"
-        environment:
-          #- RADIUS_HOST=freeradius
-          #- RADIUS_KEY=testing123
-          #- DNS_HOST1=1.1.1.1
-          #- DNS_HOST2=1.0.0.1
-          - OVPN_DEBUG=yes
-        cap_add:
-          - NET_ADMIN
-        restart: always
-        networks:
-          - vpn
-
+  ovpn:
+    image: "2stacks/docker-ovpn:latest"
+    ports:
+      - "443:443"
+      - "1194:1194/udp"
+    volumes:
+      - "./configs/ovpn:/etc/openvpn"
+    environment:
+      #- RADIUS_HOST=freeradius
+      #- RADIUS_KEY=testing123
+      #- DNS_HOST1=1.1.1.1
+      #- DNS_HOST2=1.0.0.1
+      - OVPN_DEBUG=yes
+    cap_add:
+      - NET_ADMIN
+    restart: always
     networks:
-      vpn:
-        ipam:
-          config:
-            - subnet: 10.0.1.0/24
+      - backend
+
+  freeradius:
+    image: "2stacks/freeradius:latest"
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+    environment:
+      #- DB_NAME=radius
+      #- DB_HOST=mysql
+      #- DB_USER=radius
+      #- DB_PASS=radpass
+      #- DB_PORT=3306
+      #- RADIUS_KEY=testing123
+      #- RAD_CLIENTS=10.0.0.0/22
+      - RAD_DEBUG=yes
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    restart: always
+    networks:
+      - backend
+
+  mysql:
+    image: "mysql:5.7.22"
+    command: mysqld --server-id=1
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - "./configs/mysql/master/data:/var/lib/mysql"
+      - "./configs/mysql/master/conf.d:/etc/mysql/conf.d"
+      - "./configs/mysql/radius.sql:/docker-entrypoint-initdb.d/radius.sql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=radius
+      - MYSQL_USER=radius
+      - MYSQL_PASSWORD=radpass
+      - MYSQL_DATABASE=radius
+    restart: always
+    networks:
+      - backend
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 10.0.0.128/25
 ```
