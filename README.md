@@ -5,7 +5,8 @@ Server listens for connections on both UDP 1194 and TCP 443.  The server will lo
 for key material in '$PWD/config/ovpn'
 
 ## Supported tags
--   1.1, latest
+-   1.2, latest
+-   1.1
 -   0.1b
 
 ## The following key materials are required to launch the server.
