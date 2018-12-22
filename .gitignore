@@ -1,0 +1,6 @@
+*~
+.idea/
+configs/ovpn/*.conf
+configs/ovpn/*.crt
+configs/ovpn/*.dh
+configs/ovpn/*.key
