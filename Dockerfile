@@ -4,31 +4,28 @@
 FROM ubuntu:16.04
 MAINTAINER "2stacks@2stacks.net"
 
-# Use docker build --pull --build-arg BUILD_DATE='date' -t 2stacks/docker-ovpn .
-ARG BUILD_DATE
-
 # Image details
-LABEL net.2stacks.build-date="$BUILD_DATE" \
-      net.2stacks.name="2stacks" \
+LABEL net.2stacks.name="2stacks" \
       net.2stacks.license="MIT" \
       net.2stacks.description="Dockerfile for autobuilds" \
       net.2stacks.url="http://www.2stacks.net" \
       net.2stacks.vcs-type="Git" \
-      net.2stacks.version="1.2"
+      net.2stacks.version="1.3" \
+      net.2stacks.ovpn.version="2.4.6"
 
 # Install OpenVPN
 RUN apt-get -y update && apt-get install -y \
                                               apt-transport-https \
                                               ca-certificates \
                                               curl \
-	                                      iptables \
+	                                          iptables \
                                               software-properties-common && \
     curl -fsSL https://swupdate.openvpn.net/repos/repo-public.gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] http://build.openvpn.net/debian/openvpn/release/2.4 xenial main" && \
     apt-get -y update && apt-get install -y \
                                               easy-rsa \
                                               openvpn \
-	                                      openvpn-auth-radius \
+	                                          openvpn-auth-radius \
                                               freeradius-utils \
                                               iputils-ping \
     && rm -rf /var/lib/apt/lists/*

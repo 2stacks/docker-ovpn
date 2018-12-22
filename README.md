@@ -5,7 +5,8 @@ Server listens for connections on both UDP 1194 and TCP 443.  The server will lo
 for key material in '$PWD/config/ovpn'
 
 ## Supported tags
--   1.2, latest
+-   1.3, latest
+-   1.2
 -   1.1
 -   0.1b
 
@@ -49,7 +50,6 @@ docker run -itd \
   -h openvpn \
   --restart=always \
   --name openvpn \
-  --network=vpn \
   --cap-add=NET_ADMIN \
   -e "RADIUS_HOST=freeradius" \
   -e "RADIUS_KEY=testing123" \

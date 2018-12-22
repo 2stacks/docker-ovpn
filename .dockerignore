@@ -1,5 +1,4 @@
 .dockerignore
 .git*
-docker-compose.yml
-Dockerfile
+.idea
 configs
