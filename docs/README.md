@@ -4,11 +4,16 @@ Builds an OpenVPN server that uses Freeradius/MySQL for backend authentication.
 Server listens for connections on both UDP 1194 and TCP 443.  The server will look
 for key material in '$PWD/config/ovpn'
 
+[![Build Status](https://travis-ci.org/2stacks/docker-ovpn.svg?branch=master)](https://travis-ci.org/2stacks/docker-ovpn)
+[![Docker Stars](https://img.shields.io/docker/stars/2stacks/docker-ovpn.svg?style=popout-square)](https://hub.docker.com/r/2stacks/docker-ovpn)
+[![Docker Pulls](https://img.shields.io/docker/pulls/2stacks/docker-ovpn.svg?style=popout-square)](https://hub.docker.com/r/2stacks/docker-ovpn)
+[![Build Details](https://images.microbadger.com/badges/image/2stacks/docker-ovpn.svg)](https://microbadger.com/images/2stacks/docker-ovpn)
+
 ## Supported tags
--   1.3, latest
--   1.2
--   1.1
--   0.1b
+-   `1.4`, `latest`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/master/Dockerfile)
+-   `1.3`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/ec1316eef9b5299010f8ab743007ba1a224a6ec9/Dockerfile)
+-   `1.2`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/bfc717e2886aa22e206e64d3cffb8e35f5d34c6d/Dockerfile)
+-   `1.1`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/ea86b2ffcd4392d56a0279e695074f8bb70df24d/Dockerfile)
 
 ## The following key materials are required to launch the server.
 
