@@ -1,4 +1,5 @@
 .dockerignore
 .git*
 .idea
+.travis.yml
 configs
