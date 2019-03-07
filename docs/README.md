@@ -77,39 +77,21 @@ Example 'docker-compose.yml' File
 version: '3.2'
 
 services:
-
-  ovpn:
-    image: "2stacks/docker-ovpn:latest"
-    ports:
-      - "443:443"
-      - "1194:1194/udp"
-    volumes:
-      - "./configs/ovpn:/etc/openvpn"
-    environment:
-      #- RADIUS_HOST=freeradius
-      #- RADIUS_KEY=testing123
-      #- DNS_HOST1=1.1.1.1
-      #- DNS_HOST2=1.0.0.1
-      - OVPN_DEBUG=yes
-    cap_add:
-      - NET_ADMIN
-    restart: always
-    networks:
-      - backend
-
   freeradius:
-    image: "2stacks/freeradius:latest"
-    ports:
-      - "1812:1812/udp"
-      - "1813:1813/udp"
+    image: "2stacks/freeradius"
+    #ports:
+      #- "1812:1812/udp"
+      #- "1813:1813/udp"
+    #volumes:
+      #- "./configs/radius/users:/etc/raddb/users"
     environment:
       #- DB_NAME=radius
-      #- DB_HOST=mysql
+      - DB_HOST=mysql
       #- DB_USER=radius
       #- DB_PASS=radpass
       #- DB_PORT=3306
       #- RADIUS_KEY=testing123
-      #- RAD_CLIENTS=10.0.0.0/22
+      #- RAD_CLIENTS=10.0.0.0/24
       - RAD_DEBUG=yes
     depends_on:
       - mysql
@@ -120,10 +102,10 @@ services:
       - backend
 
   mysql:
-    image: "mysql:5.7.22"
-    command: mysqld --server-id=1
+    image: "mysql:5.7"
+    command: mysqld
     ports:
-      - "127.0.0.1:3306:3306"
+      - "3306:3306"
     volumes:
       - "./configs/mysql/master/data:/var/lib/mysql"
       - "./configs/mysql/master/conf.d:/etc/mysql/conf.d"
@@ -141,5 +123,5 @@ networks:
   backend:
     ipam:
       config:
-        - subnet: 10.0.0.128/25
+        - subnet: 10.0.0.0/24
 ```
