@@ -71,6 +71,14 @@ docker run -itd \
 docker-compose -f docker-compose.yml up -d
 ```
 
+## Testing
+If you launch the stack using the included docker-compose file you should be able to test that everything is working with;
+```bash
+docker run -it -v $PWD/configs/ovpn/client.conf:/etc/openvpn/client.conf --device /dev/net/tun:/dev/net/tun --net=docker-ovpn_backend --cap-add=NET_ADMIN 2stacks/ovpn-client client.conf
+```
+  - Enter Auth Username:testing
+  - Enter Auth Password: password
+
 Example 'docker-compose.yml' File
 
 ```bash

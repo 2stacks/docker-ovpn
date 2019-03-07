@@ -22,11 +22,11 @@ proto udp
 nobind
 
 <connection>
-remote localhost 1194 udp
+remote ovpn 1194 udp
 </connection>
 
 <connection>
-remote localhost 443 tcp-client
+remote ovpn 443 tcp-client
 </connection>
 
 dev tun
