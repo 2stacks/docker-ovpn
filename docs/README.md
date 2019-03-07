@@ -77,6 +77,25 @@ Example 'docker-compose.yml' File
 version: '3.2'
 
 services:
+  ovpn:
+    image: "2stacks/docker-ovpn:latest"
+    ports:
+      - "443:443"
+      - "1194:1194/udp"
+    volumes:
+      - "./configs/ovpn:/etc/openvpn"
+    environment:
+      #- RADIUS_HOST=freeradius
+      #- RADIUS_KEY=testing123
+      #- DNS_HOST1=1.1.1.1
+      #- DNS_HOST2=1.0.0.1
+      - OVPN_DEBUG=yes
+    cap_add:
+      - NET_ADMIN
+    restart: always
+    networks:
+      - backend
+
   freeradius:
     image: "2stacks/freeradius"
     #ports:
