@@ -10,10 +10,11 @@ for key material in '$PWD/config/ovpn'
 [![Build Details](https://images.microbadger.com/badges/image/2stacks/docker-ovpn.svg)](https://microbadger.com/images/2stacks/docker-ovpn)
 
 ## Supported tags
--   `1.4`, `latest`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/master/Dockerfile)
--   `1.3`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/ec1316eef9b5299010f8ab743007ba1a224a6ec9/Dockerfile)
--   `1.2`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/bfc717e2886aa22e206e64d3cffb8e35f5d34c6d/Dockerfile)
--   `1.1`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/ea86b2ffcd4392d56a0279e695074f8bb70df24d/Dockerfile)
+| Tag | Ubuntu Version | FreeRADIUS Version | Release Date |
+-   `1.5`, `latest`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/master/Dockerfile)
+-   `1.4`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/v1.4/Dockerfile)
+-   `1.3`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/v1.3/Dockerfile)
+-   `1.2`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/1.2/Dockerfile)
 
 ## The following key materials are required to launch the server.
 
@@ -74,9 +75,9 @@ docker-compose -f docker-compose.yml up -d
 ## Testing
 If you launch the stack using the included docker-compose file you should be able to test that everything is working with;
 ```bash
-docker run -it -v $PWD/configs/ovpn/client.conf:/etc/openvpn/client.conf --device /dev/net/tun:/dev/net/tun --net=docker-ovpn_backend --cap-add=NET_ADMIN 2stacks/ovpn-client client.conf
+docker run -it --rm -v $PWD/configs/ovpn/client.conf:/etc/openvpn/client.conf --device /dev/net/tun:/dev/net/tun --net=docker-ovpn_backend --cap-add=NET_ADMIN 2stacks/ovpn-client client.conf
 ```
-  - Enter Auth Username:testing
+  - Enter Auth Username: testing
   - Enter Auth Password: password
 
 Example 'docker-compose.yml' File
@@ -131,8 +132,8 @@ services:
   mysql:
     image: "mysql:5.7"
     command: mysqld
-    ports:
-      - "3306:3306"
+    #ports:
+      #- "3306:3306"
     volumes:
       - "./configs/mysql/master/data:/var/lib/mysql"
       - "./configs/mysql/master/conf.d:/etc/mysql/conf.d"

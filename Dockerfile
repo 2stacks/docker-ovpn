@@ -10,8 +10,8 @@ LABEL net.2stacks.name="2stacks" \
       net.2stacks.description="Dockerfile for autobuilds" \
       net.2stacks.url="http://www.2stacks.net" \
       net.2stacks.vcs-type="Git" \
-      net.2stacks.version="1.4" \
-      net.2stacks.ovpn.version="2.4.6"
+      net.2stacks.version="1.5" \
+      net.2stacks.ovpn.version="2.4.7"
 
 # Install OpenVPN
 RUN apt-get -y update && apt-get install -y \
