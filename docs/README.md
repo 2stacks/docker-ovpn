@@ -10,7 +10,6 @@ for key material in '$PWD/config/ovpn'
 [![Build Details](https://images.microbadger.com/badges/image/2stacks/docker-ovpn.svg)](https://microbadger.com/images/2stacks/docker-ovpn)
 
 ## Supported tags
-| Tag | Ubuntu Version | FreeRADIUS Version | Release Date |
 -   `1.5`, `latest`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/master/Dockerfile)
 -   `1.4`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/v1.4/Dockerfile)
 -   `1.3`  [*(Dockerfile)*](https://github.com/2stacks/docker-ovpn/blob/v1.3/Dockerfile)
