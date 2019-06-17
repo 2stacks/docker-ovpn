@@ -1,1 +1,7 @@
-theme: jekyll-theme-slate
+remote_theme: mmistakes/minimal-mistakes
+titles_from_headings:
+  enabled:     true
+  strip_title: true
+plugins:
+  - jekyll-include-cache
+  - jekyll-titles-from-headings
