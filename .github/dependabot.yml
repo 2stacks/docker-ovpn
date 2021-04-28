@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: ubuntu
+    versions:
+    - ">= 16.10.a, < 16.11"
+  - dependency-name: ubuntu
+    versions:
+    - "< 18, >= 17.a"
+  - dependency-name: ubuntu
+    versions:
+    - "< 19, >= 18.a"
