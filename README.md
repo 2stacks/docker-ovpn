@@ -152,3 +152,9 @@ networks:
       config:
         - subnet: 10.0.0.0/24
 ```
+
+
+UPD.
+You need install to freeradius image package
+# apk add  freeradius-radclient
+Because the command radtest doesn't working.
