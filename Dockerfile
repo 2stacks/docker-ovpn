@@ -1,7 +1,7 @@
 # Credit: https://github.com/jpetazzo/dockvpn
 # Credit: https://github.com/kylemanna/docker-openvpn
 
-FROM ubuntu:16.04
+FROM ubuntu:23.04
 MAINTAINER "2stacks@2stacks.net"
 
 # Image details
